@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # Set the Instance ID and path to the .env file
-INSTANCE_ID="i-030da7d31a1dbbffc"
+INSTANCE_ID="i-08b2862319f08cdf5"
 
 # Retrieve the public IP address of the specified EC2 instance
 ipv4_address=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query 'Reservations[0].Instances[0].PublicIpAddress' --output text)
 
 # Path to the .env file
-file_to_find="../backend/.env.docker"
+file_to_find="../reactjs/.env.docker"
 
 # Check the current reactjs_URL in the .env file
 current_url=$(sed -n "4p" $file_to_find)
