@@ -1,19 +1,29 @@
-FROM node:18-alpine
+# Step 1: Use official Node.js image as the base image
+FROM node:20 AS build
 
-# Set working directory
+# Step 2: Set the working directory
 WORKDIR /app
 
-# Copy only package files first for caching
-COPY package.json package-lock.json* yarn.lock* pnpm-lock.yaml* ./
+# Step 3: Copy package.json and package-lock.json
+COPY package*.json ./
 
-# Install deps
+# Step 4: Install dependencies
 RUN npm install
 
-# Copy project files
+# Step 5: Copy the rest of the source code
 COPY . .
 
-# Expose Vite default dev port
-EXPOSE 5173
+# Step 6: Build the app for production
+RUN npm run build
 
-# Start Vite dev server on container start
-CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
+# Step 7: Use NGINX to serve the production build
+FROM nginx:alpine
+
+# Step 8: Copy the build directory to the NGINX html folder
+COPY --from=build /app/build /usr/share/nginx/html
+
+# Step 9: Expose port 80 for the app
+EXPOSE 80
+
+# Step 10: Run NGINX
+CMD ["nginx", "-g", "daemon off;"]
