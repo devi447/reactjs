@@ -22,8 +22,8 @@ FROM nginx:alpine
 # Step 8: Copy the build directory to the NGINX html folder
 COPY --from=build /app/build /usr/share/nginx/html
 
-# Step 9: Expose port 80 for the app
-EXPOSE 80
+# Step 9: Expose port 5173 for the app
+EXPOSE 5173
 
 # Step 10: Run NGINX
 CMD ["nginx", "-g", "daemon off;"]
