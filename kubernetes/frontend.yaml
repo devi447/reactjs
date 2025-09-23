@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: devidevops447/reactjs-frontend-beta:v2014.8886
+          image: devidevops447/reactjs-frontend-beta:v14
           ports:
             - containerPort: 5173
 ---
